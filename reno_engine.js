@@ -14,6 +14,7 @@ var RoomSectors = ["Room", "Crown", "Sheetrock", "Door", "Baseboard", "Floor", "
 $(document).ready(function() {
 	$('#page1 form').submit(function(e) {
 		e.preventDefault();
+		alert('page1 form');
 		doit();
 	});			
 });
@@ -167,6 +168,70 @@ Main function
 function doit()
 {	
 
+function KeyArgs() {
+	this.markup = 1.1;
+}
+
+function Room() {
+	this.ceilingSF = $('#RoomFloorSF').val();
+	this.wallSF = $('#RoomSheetrockLF').val();
+} 
+
+function Sheetrock() {
+	
+	room = new Room();
+	
+	// assumptions
+	this.screwsPerSheet = 43; // screws per sheet. 
+	this.screwLbsPerSF = 400; // SqFt
+	
+	var id = $('#layout input:checked').attr("id");
+	var framingLabel=($('label[for='+id+']').text());
+	
+	
+	console.log('\nsheetrock');
+	console.log('============================');
+	console.log('layout:');
+	console.log('id: '+id);
+	console.log('framingLabel: '+framingLabel);
+	
+	console.log('$(SheetrockFramingDollarsPerUnit).val(): '+$(SheetrockFramingDollarsPerUnit).val());
+
+	console.log('Sheetrock-Wall:');
+	var b = $('#Sheetrock-Wall').is(':checked');
+	console.log('#Sheetrock-Wall: '+b);
+	var b = $('#Sheetrock-Ceiling').is(':checked');
+	console.log('Sheetrock-Ceiling: '+b);
+	console.log('============================\n');
+	calc();
+	
+	function calc(){
+		sf = 0;
+		if ($('#Sheetrock-Wall').is(':checked')){
+			sf += room.wallSF;
+		}
+		if ($('#Sheetrock-Ceiling').is(':checked')){
+			sf += room.wallSF;
+		}
+		console.log('sf: '+sf);
+	}
+	/*
+	
+	
+	New Framing
+	Layout
+	SheetrockFramingDollarsPerUnit 
+	Sheetrock Surfaces
+	SheetrockDollarsPerUnit
+	SheetrockScrewDollarsPerUnit
+	*/
+}
+
+r = new Room();
+console.log('r.ceilingSF: ' + r.ceilingSF);
+console.log('r.wallSF: ' + r.wallSF);
+s = new Sheetrock();
+
 function Sector(sector)
 	{
 	this.arrayDollarsPerLF = buildArray("DollarsPerLF");
@@ -184,14 +249,31 @@ function Sector(sector)
 	SectorCount.push(this.cnt);
 	Sectors.push(this.totalCost);
 	
-	
-	
+	console.log('sector: ' + sector);
+	console.log('-------------------------');
+	console.log('arrayDollarsPerLF :' + this.arrayDollarsPerLF);
+	console.log('arrayDollarsPerSF :' + this.arrayDollarsPerSF);
+	console.log('arrayDollarsPerUnit :' + this.arrayDollarsPerUnit);
+	console.log('totalDollarsPerLF :' + this.totalDollarsPerLF);
+	console.log('this.totalDollarsPerSF :' + this.totalDollarsPerSF);
+	console.log('this.totalDollarsPerUnit :' + this.totalDollarsPerUnit);
+	console.log('this.totalLF :' + this.totalLF);
+	console.log('this.totalSF :' + this.totalSF);
+	console.log('this.totalCost :' + this.totalCost);
+	console.log('this.totalSF :' + this.totalSF);
+	console.log('this.totalCost :' + this.totalCost);
+	console.log('this.cnt :' + this.cnt);
+	console.log('\n');
 
 		if (sector=="Sheetrock") {
+			console.log('\n++++++++++++++++++\n');
+			
 			$.each(['framing','layout','sheetrocksurface'], function(index, variable) {
-				//alert((findCheckedInputElements(variable, 'label')).join(", "));
-				//alert( sumArray(findCheckedInputElements(variable, 'value')) );
+				
+				console.log((findCheckedInputElements(variable, 'label')).join(", "));
+				console.log( sumArray(findCheckedInputElements(variable, 'value')) );
 			});
+			console.log('\n++++++++++++++++++\n');
 		}
 	
 	function findCheckedInputElements(inputElementId,outputElementType)
@@ -291,14 +373,13 @@ $.each(RoomSectors, function(index, sect) {
 	
 });
 
-	///*
-	//alert("oSheetrock.totalSF: "+oSheetrock.totalSF);
-	oSheetrock.totalSF = (oBaseboard.totalLF * oRoom.totalLF);
-	//alert("oSheetrock.totalSF: " + oSheetrock.totalSF );
-	//*/
 	
+	console.log("oSheetrock.totalSF: "+oSheetrock.totalSF);
+	oSheetrock.totalSF = (oBaseboard.totalLF * oRoom.totalLF);
+	console.log("oSheetrock.totalSF: " + oSheetrock.totalSF );
+	console.log("oRoom: " + oRoom);
 
-//$("#SmallTable").html(smltbl);
+$("#SmallTable").html(smltbl);
 
 
 $('#SumUL li:not(:first)').remove();
@@ -314,7 +395,7 @@ $.each(RoomSectors, function(index, value) {
 					$('#SumUL li:last .ui-li-count').html(SectorCount[index]);					// Insert count of detail report here		
 			} else {
 					$('#SumUL li:last .ui-block-b').html(sumArray(Sectors)).formatCurrency(); 	// Insert  $ amount here
-					$('#SumUL li:last .ui-li-count').html(Sectors.length-1);									// Insert count of detail report here								
+					$('#SumUL li:last .ui-li-count').html(Sectors.length-1);					// Insert count of detail report here								
 			};
 });		
 
@@ -323,6 +404,8 @@ $.each(RoomSectors, function(index, value) {
 
 }
 
+/*
 function jumpToAnchor(p) {
 	window.location = window.location + "#page2";
 }
+*/
