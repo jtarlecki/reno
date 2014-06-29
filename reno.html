@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Estimator</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<meta charset="utf-8">
+		<meta name="description" content="A mobile interface to help estimate the costs of doing a major room renovation">
+		<meta name="keywords" content="Calculator,Renovation,Sheetrock,Crown Moulding,Baseboard,Flooring,South Philly,Occupy Wolf Street">
+		
+		<!-- CUSTOM THEME!!!
+		<link rel="stylesheet" href="http://jaytarlecki.com/m/themes/Ren.min.css" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css" />
+		<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+		-->
+		
+		<!---->
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+
+		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+		<script src="http://jaytarlecki.com/m/jquery.formatCurrency-1.4.0.min.js"></script>
+		
+	</head>
+	<body>
+
+
+
+<div data-role="page" id="page1" >
+
+
+
+	<div data-role="header">
+		<h1 id="address"><!--<img src="http://4.bp.blogspot.com/-fZ21sILnkLY/T58XL9fzSzI/AAAAAAAAAVA/2DXdHosxBEQ/s1600/OWS2.jpg" height=75 width=250></br>-->Major Renovation Estimator</br>"Mobile App"</h1>
+	</div>
+	
+	<div data-role="content" data-theme="a">
+		
+		<div data-role="collapsible-set" data-theme="c" >
+			
+			<form id="frm" data-ajax="false" data-mini="true">	
+
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<input class="Programmer" type="checkbox" name="rnd" id="rnd"  />
+					<label for="rnd">Random Number Generator</label>
+				</fieldset>
+			
+
+
+			
+				<div data-role="collapsible" id="RoomProfile" class="content-primary">
+					<h3>Room Profile</h3>
+						<ul data-role="listview">
+							<li data-role="fieldcontain">
+							 <label for="RoomFloorSF">Square feet of space</label>
+							 <input class="Room" type="text" name="RoomFloorSF" id="RoomFloorSF" value="" placeholder="sq ft" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="RoomCrownLF">Crown moulding perimeter length</label>
+							 <input class="Room" type="text" name="RoomCrownLF" id="RoomCrownLF" value="" placeholder="linear feet" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="RoomBaseboardLF">Baseboard perimeter length</label>
+							 <input class="Room" type="text" name="RoomBaseboardLF" id="RoomBaseboardLF" value="" placeholder="linear feet" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="RoomSheetrockLF">Wall height</label>
+							 <input class="Room" type="text" name="RoomSheetrockLF" id="RoomSheetrockLF" value="" placeholder="feet" />
+							</li>
+						</ul>
+
+						
+		<a href="#popupBasic" data-rel="popup" data-role="button" data-inline="true">Open Popup</a>
+		
+		<div data-role="popup" id="popupBasic">
+			<p>This is a completely basic popup, no options set.</p>
+		</div>
+
+				</div>
+				
+				<div data-role="collapsible"  id="Crown">
+					<h3>Crown Moulding</h3>
+						<ul data-role="listview" id="CrownUL">
+							<li data-role="fieldcontain" id="Crown1">
+							 <label id="Crown1Label" for="Crown1DollarsPerLF">Crown Profile 1</label>
+							 <input class="Crown" type="text" name="Crown1DollarsPerLF" id="Crown1DollarsPerLF" value="" placeholder="$ / lf" />
+							</li>
+						</ul>	
+
+					<a id="RemoveCrown" data-role="button" data-inline="true" data-mini="true">Remove</a>
+					<a id="AddCrown" data-role="button" data-theme="b" data-inline="true" data-mini="true">Add</a>
+					
+				</div>
+
+				<div data-role="collapsible" id="Sheetrock">
+					<h3>Sheetrock</h3>
+						<ul data-role="listview" id="SheetrockUL">
+						
+							<li id="framing" data-role="fieldcontain" >
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<legend>New Framing</legend>
+										<label for="framing1">1 x 3s</label>
+										<input type="radio" name="framingChoice" id="framing1" value="on" class="Sheetrock"/>
+										<label for="framing2">2 x 4s</label>
+										<input type="radio" name="framingChoice" id="framing2" value="off" class="Sheetrock"/>
+										<label for="framing3">N/A</label>
+										<input type="radio" name="framingChoice" id="framing3" value="other" checked="checked" class="Sheetrock"/>
+								</fieldset>
+							</li>
+							<li id="layout" data-role="fieldcontain" >
+								<fieldset data-role="controlgroup" data-type="horizontal">	
+									<legend>Layout</legend>
+										<label for="layout1">16" o.c.</label>
+										<input type="radio" name="layoutChoice" id="layout1" value="16" class="Sheetrock" />
+										<label for="layout2">24" o.c.</label>
+										<input type="radio" name="layoutChoice" id="layout2" value="24" class="Sheetrock"/>
+										<label for="layout3">N/A</label>
+										<input type="radio" name="layoutChoice" id="layout3" value="16" checked="checked" class="Sheetrock"/>
+								</fieldset>
+							</li>
+							
+							<li id="framingprice" data-role="fieldcontain">
+							 <label for="SheetrockFramingDollarsPerUnit">Framing Price</label>
+							 <input class="Sheetrock" type="text" name="SheetrockFramingDollarsPerUnit" id="SheetrockFramingDollarsPerUnit" value="" placeholder="$ / piece" />
+							</li>
+							
+							<li id="sheetrocksurface" data-role="fieldcontain">
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<legend>Sheetrock Surfaces:</legend>
+										<input class="Sheetrock" type="checkbox" name="Sheetrock-Wall" id="Sheetrock-Wall"  />
+										<label for="Sheetrock-Wall">Wall</label>
+						
+										<input class="Sheetrock" type="checkbox" name="Sheetrock-Ceiling" id="Sheetrock-Ceiling" />
+										<label for="Sheetrock-Ceiling">Ceiling</label>
+								</fieldset>
+							</li>
+							
+							<li id="SheetrockPiece" data-role="fieldcontain">
+							 <label for="SheetrockDollarsPerUnit">Sheetrock</label>
+							 <input class="Sheetrock" type="text" name="SheetrockDollarsPerUnit" id="SheetrockDollarsPerUnit" value="" placeholder="$ / sheet" />
+							</li>
+							<li id="SheetrockScrews" data-role="fieldcontain">
+							 <label for="SheetrockScrewDollarsPerUnit">Drywall Screws</label>
+							 <input class="Sheetrock" type="text" name="SheetrockScrewDollarsPerUnit" id="SheetrockScrewDollarsPerUnit" value="" placeholder="$ / lb" />
+							</li>
+						</ul>
+				</div>
+
+				<div data-role="collapsible" id="Door">
+					<h3>Door Trim</h3>
+						<ul data-role="listview">
+							<li data-role="fieldcontain">
+							 <label for="DoorCount"># Doors</label>
+							 <input class="Door" type="text" name="DoorCount" id="DoorCount" value="" placeholder="Count of doors in room" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="DoorHeightInches">Door Height</label>
+							 <input class="Door" type="text" name="DoorHeightInches" id="DoorHeightInches" value="" placeholder="Inches" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="DoorWidthInches">Door Width</label>
+							 <input class="Door" type="text" name="DoorWidthInches" id="DoorWidthInches" value="" placeholder="Inches" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="DoorTrimDollarsPerLF">Door Trim</label>
+							 <input class="Door" type="text" name="DoorTrimDollarsPerLF" id="DoorTrimDollarsPerLF" value="" placeholder="$ / lf" />
+							</li>
+						</ul>
+				</div>
+				
+				<div data-role="collapsible" id="Baseboard">
+					<h3>Baseboard</h3>
+						<ul data-role="listview" id="BaseboardUL">
+							<li data-role="fieldcontain">
+							 <label for="BaseboardTopCapDollarsPerLF">Top cap</label>
+							 <input class="Baseboard" type="text" name="BaseboardTopCapDollarsPerLF" id="BaseboardTopCapDollarsPerLF" value="" placeholder="$ / lf" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="BaseboardShoeDollarsPerLF">Shoe Moulding</label>
+							 <input class="Baseboard" type="text" name="BaseboardShoeDollarsPerLF" id="BaseboardShoeDollarsPerLF" value="" placeholder="$ / lf" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="Baseboard1DollarsPerLF">Baseboard Profile 1</label>
+							 <input class="Baseboard" type="text" name="Baseboard1DollarsPerLF" id="Baseboard1DollarsPerLF" value="" placeholder="$ / lf" />
+							</li>
+						</ul>
+					
+					<a id="RemoveBaseboard" data-role="button" data-inline="true" data-mini="true">Remove</a>
+					<a id="AddBaseboard" data-role="button" data-theme="b" data-inline="true" data-mini="true">Add</a>
+					
+					<!--
+					<fieldset class="ui-grid-e" name="addRemoveBaseboard">
+						<div class="ui-block-a"><button id="RemoveBaseboard">Remove</button></div>
+						<div class="ui-block-b"><button id="AddBaseboard">Add</button></div>
+					</fieldset>	
+					-->
+					
+				</div>
+
+				<div data-role="collapsible" id="Floor">
+					<h3>Flooring</h3>
+						<ul data-role="listview">
+							<li data-role="fieldcontain">
+							 <label for="FloorWidthInches">Hardwood Width</label>
+							 <input class="Floor" type="text" name="FloorWidthInches" id="FloorWidthInches" value="" placeholder="Inches" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="FloorDollarsPerSF">Flooring</label>
+							 <input class="Floor" type="text" name="FloorDollarsPerSF" id="FloorDollarsPerSF" value="" placeholder="$ / sf" />
+							</li>
+							<li data-role="fieldcontain">
+							 <label for="FloorPolyDollarsPerUnit">Poly</label>
+							 <input class="Floor" type="text" name="FloorPolyDollarsPerUnit" id="FloorPolyDollarsPerUnit" value="" placeholder="$ / can" />
+							</li>
+						</ul>
+
+				</div>
+
+				<div data-role="collapsible" id="Paint">
+					<h3>Paint</h3>
+						<ul data-role="listview" id="paintUL">
+							<li id="paintsurface" data-role="fieldcontain">
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<legend>Painting Surfaces:</legend>
+										<input type="checkbox" name="cb-Wall" id="cb-Wall" class="custom" />
+										<label for="cb-Wall">Wall</label>
+						
+										<input type="checkbox" name="cb-Ceiling" id="cb-Ceiling" class="custom" />
+										<label for="cb-Ceiling">Ceiling</label>
+						
+										<input type="checkbox" name="cb-Trim" id="cb-Trim" class="custom" />
+										<label for="cb-Trim">Trim</label>
+								
+										<input type="checkbox" name="cb-Door" id="cb-Door" class="custom" />
+										<label for="cb-Door">Door</label>
+										
+										<input type="checkbox" name="cb-Floor" id="cb-Floor" class="custom" />
+										<label for="cb-Floor">Floor</label>
+								</fieldset>
+							</li>
+							
+							<!---->
+							<li id="PaintObj" data-role="fieldcontain">
+							 <label for="p1">Primer</label>
+							 <input  class="Paint" type="text" name="p1" id="p1" value="" placeholder="$ / gallon" />
+							 <label for="p2">Primer Coats</label>
+							 <input class="Paint"  type="text" name="p2" id="p2" value="" placeholder="# Coats" />							
+							 <label for="p3">Paint</label>
+							 <input class="Paint"  type="text" name="p3" id="p3" value="" placeholder="$ / gallon" />
+							<label for="p4">Paint Coats</label>
+							 <input class="Paint"  type="text" name="p4" id="p4" value="" placeholder="# Coats" />
+							</li>
+							
+							<!--
+							<li id="PaintObj" data-role="fieldcontain">			
+								<div class="ui-bar ui-grid-a">
+									<div class="ui-block-a">
+										<label for="p2">Primer</label>
+										<input class="Paint"  type="text" name="p2" id="p2" value="" placeholder="# Coats" />									
+									</div>
+									<div class="ui-block-b">
+										<label for="p1"></label>
+										<input  class="Paint" type="text" name="p1" id="p1" value="" placeholder="$ / gallon" />																			
+									</div>
+									<div class="ui-block-a">
+										<label for="p4">Paint</label>
+										<input class="Paint"  type="text" name="p4" id="p4" value="" placeholder="# Coats" />								
+									</div>
+									<div class="ui-block-b">
+										<label for="p3"></label>
+										<input class="Paint"  type="text" name="p3" id="p3" value="" placeholder="$ / gallon" />																		
+									</div>								
+								</div>
+							</li>							
+							-->
+						</ul>
+				<!--	
+					Error %</br>
+					??</br>
+					Other big expenditures??
+				-->
+				</div>
+
+	
+				<ul data-role="listview" data-inset="true">
+					<!--<li class="ui-body ui-body-b">-->
+						<fieldset class="ui-grid-a">
+							<div class="ui-block-a"><button id="Reset" type="reset">Reset</button></div>
+							<div class="ui-block-b"><a href="#page2" style="text-decoration: none" data-transition="flip"><button type="submit" data-theme="b" onclick="doit()">Calculate</button></a></div>
+						</fieldset>
+					<!--</li>-->
+					
+				</ul>
+				
+				
+			</form>
+				
+
+			
+			<div data-role="footer">
+				<h1>Steal this software.<br><!--</br>Placing trademarks on commodities is where profit begins... and freedom ends.</br>--><a data-theme="c" target="_blank" href="http://jaytarlecki.com">Jay Tarlecki</a><br></h1>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
+<!--<div id="page2" data-role="page" data-add-back-btn="true">-->
+<div id="page2" data-role="page" data-add-back-btn="true">
+	
+	<div data-role="header">
+		<h1>Estimate</h1>
+	</div>
+
+	<div data-role="content">
+		<h2>Room Summary</h2>
+		<ul id="SumUL" data-role="listview" data-theme="a">
+			<!-- this first id is for cloning ONLY!!-->
+			<li id="Sum">
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a">Insert Sector Identifier</div>
+					<div class="ui-block-b">Insert $ amount</div>
+					<span id="spCrown" class="ui-li-count">Insert count of detail report</span>
+				</fieldset>
+			</li>
+		</ul>
+		
+		<br>
+		<!-- support table, for building app -->
+		<table id="SmallTable" border="1"></table>
+		<br>
+		<table id="ResultsTable" border="1"></table>
+	</div>
+
+	<div data-role="footer">
+		<h1>Steal this software.<br><!--</br>Placing trademarks on commodities is where profit begins... and freedom ends.</br>--><a target="_blank" href="http://jaytarlecki.com">Jay Tarlecki</a><br></h1>
+	</div>
+	
+</div>
+
+<p id="err">Please input numbers <i>only</i>.</p>
+<div data-role="popup" id="popupVal" data-theme="e" data-overlay-theme="a">
+	<p>Please enter a valid number before continuing.<p>
+</div>
+
+
+
+<!-- Error -->
+<!--
+<div data-role="page" id="error" data-add-back-btn="true">
+
+	<div data-role="header">
+		<h1>Error</h1>
+	</div>
+
+	<div data-role="content">
+	</div>
+
+</div>
+-->
+		
+	
+		<script>
+		var i = 1;	//Crown counter
+		var j = 1; 	//Baseboard counter
+		var hardwoodWidth = 0;
+		var hardwoodNailing;
+		var RoomSectors = ["Room", "Crown", "Sheetrock", "Door", "Baseboard", "Floor", "Paint"];
+		//Hardwoods
+			if (hardwoodWidth > 2.5) {
+				hardwoodNailing = 5;
+			}
+			else {	
+				hardwoodNailing = 7;
+			}
+		
+		$(document).ready(function() {
+			$('#page1 form').submit(function(e) {
+				e.preventDefault();
+				doit();
+			});			
+		});
+
+	//Hide this elements on initialize
+		$("#layout, #framingprice, #PaintObj, #Sum, #SheetrockPiece, #SheetrockScrews, #err, #popupVal").hide();
+
+		$("#AddBaseboard, #AddCrown").click(function(){       
+			var trim = $(this).attr("id").split('Add').pop();
+			var z
+				if (trim == "Crown") {
+					z=++i;
+				}
+				else {
+					z=++j;
+				}
+			//alert($(this).attr("id"));
+			$('#' + trim +'UL li:last')
+				.clone(true)
+				.insertAfter('#' + trim + 'UL li:last')
+				.find("input")
+				.attr("id", trim + z + "DollarsPerLF")
+				.attr("name", trim + z + "DollarsPerLF")
+				.val('');
+			//re-select new last list item label
+			$('#' + trim + 'UL li:last label')
+				.html(trim +" Profile " + z)
+				.attr("id",trim + z);    
+		}); 
+		
+		$("#RemoveCrown").click(function(){
+			if (i>1) {
+				i--;
+				$('#CrownUL li:last').remove();
+			}
+		});
+		$("#RemoveBaseboard").click(function(){
+			if (j>1) {
+				j--;
+				$('#BaseboardUL li:last').remove();
+			}
+		});
+		
+		$("#Reset").click(function(){
+			i=1;
+			j=1;
+			$('#CrownUL li:not(:first), #BaseboardUL li:not(:lt(3))').remove();
+			//Probably a better way than this; can't find proper selector for reset radio checkbox
+			location.reload();
+		});
+		
+		$("#framing input").click(function(){
+			var id = $('#framing input:checked').attr("id");
+			var framingLabel=($('label[for='+id+']').text());
+			$("#layout, #framingprice").toggle(id!='framing3');
+			$("#framingprice label").text(framingLabel);
+		});
+		
+		// for sheetrock surface
+		$("#sheetrocksurface input").click(function(){
+			var id = $('#sheetrocksurface input:checked').attr("id");
+			$("#SheetrockPiece, #SheetrockScrews").toggle(id!=undefined);
+		});
+		
+		$("p").css({"color":"red"});
+		
+		var $m=$('#err').clone(true);
+		//Validation
+		$('input').keyup(function() {
+			var $me = $(this)
+			var id="err"+$me.attr("id");	
+				if (isNaN($me.val())) {
+					if (($("#"+id).length)==0) {
+						//insert after and show
+						$m.insertAfter($me).show().attr("id",id);
+					} else {
+						//already exists, just show
+						$("#"+id).show();
+					}
+				} else {
+					// its a number, just hide it
+					$("#"+id).hide();
+				}
+		
+		});
+
+		$('input').mouseleave(function() {
+			if (isNaN($(this).val())){
+				//$("#popupVal").show().popup("open");
+				//alert("Please input a number before continuing");
+				$(this).select();
+			}
+		});		
+		
+		
+		//<label for="p2">Primer Coats</label>
+		
+		/*
+			function appendText($me)
+			{
+			var txt1="<p>Text.</p>";               // Create element with HTML  
+			var txt2=$("<p></p>").text("Text.");   // Create with jQuery
+			var txt3=document.createElement("p");  // Create with DOM
+			txt3.innerHTML="Text.";
+			$("p").append(txt1,txt2,txt3);         // Append the new elements 
+			}
+		*/
+		
+		
+		
+		//Handle for click of paint checkboxes
+		$('input[name*="cb-"]').click(function () {
+			var clsName = $(this).attr("id").substring(3);
+			var id = clsName + 'Li';
+			
+			if ($('#' + id ).length) {
+				//$($('#' + id )).toggle(this.checked);
+				$('#' + id).remove();
+			}
+			else {
+				var p = "Paint";
+				$('#' + p +'Obj')
+					.clone(true)
+					.insertAfter('#paintUL li:last')
+					.show()
+					.attr("id", id);
+
+				var allInputs = $('#' + id + ' :input').addClass(p);
+				for (var n=0;n<allInputs.length;n++)
+					{
+					$("#" + id).find("label").eq(n).prepend(clsName + " ");
+					$("#" + id).find("input").eq(n)
+						.attr("id", p + clsName + n)
+						.attr("name", p + clsName + n);
+					}
+			}
+		});
+
+		//Random numbers for input, packaged into a checkbox at top.
+		$('#rnd').click(function () {
+			var b=$(this).attr("checked")=="checked";
+			$.each(RoomSectors, function(index, value) { 	
+				$('[class*="' + value + '"]').each(function() {
+						if ($(this).attr("type")=="text") {
+								if (b){
+									$(this).val(Math.floor((Math.random()*100)+1));
+								}else{
+									$(this).val("");
+								} 
+						}
+				});
+			});
+		});
+		
+		
+		$(".Paint").attr('class', 'p');
+		
+		function isEmpty(input){
+			if (input=="" || input==null) {return 0;} else {return input;}
+		}
+		
+		/*
+		Main function
+		*/
+		
+		function doit()
+		{	
+		
+		function Sector(sector)
+			{
+			this.arrayDollarsPerLF = buildArray("DollarsPerLF");
+			this.arrayDollarsPerSF = buildArray("DollarsPerSF");
+			this.arrayDollarsPerUnit = buildArray("DollarsPerUnit");
+			this.totalDollarsPerLF = NaNtoZero(sumArray(this.arrayDollarsPerLF));
+			this.totalDollarsPerSF = NaNtoZero(sumArray(this.arrayDollarsPerSF));
+			this.totalDollarsPerUnit = NaNtoZero(sumArray(this.arrayDollarsPerUnit));
+			this.totalLF = NaNtoZero(getTotalLF());
+			this.totalSF = NaNtoZero(parseFloat($('[name*="' + sector + 'SF"]').val()));	
+				
+
+			this.totalCost = getTotalCost(this);
+			this.cnt = this.arrayDollarsPerLF.length + this.arrayDollarsPerSF.length + this.arrayDollarsPerUnit.length ;
+			SectorCount.push(this.cnt);
+			Sectors.push(this.totalCost);
+			
+			
+			
+			//var SheetrockItems =['framing','layout','sheetrocksurface'];
+				if (sector=="Sheetrock") {
+					$.each(['framing','layout','sheetrocksurface'], function(index, variable) {
+						//alert((findCheckedInputElements(variable, 'label')).join(", "));
+						//alert( sumArray(findCheckedInputElements(variable, 'value')) );
+					});
+				}
+			
+			function findCheckedInputElements(inputElementId,outputElementType)
+				{
+				var arr=[];
+				var id;
+					$('#' + inputElementId + ' input:checked').each(function() {
+						id = $(this).attr("id");
+						var v = $(this).val();
+						var a=$('#' + inputElementId + ' label[for=' + id + ']').text();
+							if (outputElementType=='label'){
+								arr.push(a);
+							} else if (outputElementType=='value'){
+								arr.push(v);
+							}	
+					});
+				return arr; 			
+				}	
+					
+			function getTotalCost(x)
+				{
+				return (x.totalLF * x.totalDollarsPerLF + x.totalSF * x.totalDollarsPerSF); //+x.totalUnit * x.totalDollarsPerUnit		
+				}
+			
+			function NaNtoZero(input)
+				{if (isNaN(input)){return 0;} else {return input;}}
+			
+			function getTotalLF()
+				{var ans;	
+					if (sector=="Door"){
+						ans = (( 2*parseFloat($('#DoorHeightInches').val()) + parseFloat($('#DoorWidthInches').val()) ) / 12 );
+					} else {
+						ans = parseFloat($('[name*="' + sector + 'LF"]').val());
+					}
+				return ans;
+				}
+
+			function buildArray(v)
+				{
+				var arr=[];
+				$('[class*="' + sector + '"][name*=' + v + ']').each(function(index, value) {
+					arr.push($(this).val());
+				});
+				return arr;
+				}
+			}
+
+		function sumArray(arr)
+			{
+			var ans=0;
+				$.each(arr, function(index,value){
+					ans +=  parseFloat(isEmpty(value));
+				});
+			return ans;
+			}
+			
+		var oRoom;
+		var oCrown;
+		var oSheetrock;
+		var oDoor;
+		var oBaseboard;
+		var oFloor;
+		var oPaint;
+		
+		var Sectors=[];
+		var SectorCount=[];
+		var SectorsTotalCost=0;
+		
+		var smltbl="<tr><th></th><th>id</th><th>name</th><th>value</th><th>units</th></tr>";	
+		
+		$.each(RoomSectors, function(index, sect) { 
+			switch(sect)
+			{
+			case "Room": oRoom = new Sector(sect); break;
+			case "Crown": oCrown = new Sector(sect); break;
+			case "Sheetrock": oSheetrock = new Sector(sect); break;
+			case "Door": oDoor = new Sector(sect); break;
+			case "Baseboard": oBaseboard = new Sector(sect); break;
+			case "Floor": oFloor = new Sector(sect); break;
+			case "Paint": oPaint = new Sector(sect); break;
+			}
+			
+
+			//var sect = sect;
+			var $cls = $('[class*="' + sect + '"]');
+			
+			smltbl = smltbl + '<th rowspan="' + ($cls.length+1) + '">' + sect + '</th>'
+				$cls.each(function(index, value) {
+					var $me=$(this);
+					var t="";
+						$.each(["id", "name", "value", "placeholder"], function (index, value){
+							t = t + "<td>" + isEmpty($me.attr(value)) + "</td>";
+						});
+					smltbl = smltbl + "<tr>" + t + "</tr>";
+				});
+			
+			
+		});
+		
+			///*
+			alert("oSheetrock.totalSF: "+oSheetrock.totalSF);
+			oSheetrock.totalSF = (oBaseboard.totalLF * oRoom.totalLF);
+			alert("oSheetrock.totalSF: " + oSheetrock.totalSF );
+			//*/
+			
+		
+		//$("#SmallTable").html(smltbl);
+		
+		
+		$('#SumUL li:not(:first)').remove();
+		$.each(RoomSectors, function(index, value) { 	
+			$('#Sum')
+				.clone(true)
+				.show()
+				.insertAfter('#SumUL li:last')
+				.find(".ui-block-a")
+				.html(value + ": ");
+					if (value != "Room") {
+							$('#SumUL li:last .ui-block-b').html(Sectors[index]).formatCurrency(); 		// Insert  $ amount here
+							$('#SumUL li:last .ui-li-count').html(SectorCount[index]);					// Insert count of detail report here		
+					} else {
+							$('#SumUL li:last .ui-block-b').html(sumArray(Sectors)).formatCurrency(); 	// Insert  $ amount here
+							$('#SumUL li:last .ui-li-count').html(Sectors.length-1);									// Insert count of detail report here								
+					};
+		});		
+		
+		/*		
+				
+		<ul id="SumUL" data-role="listview">
+			
+			<li id="Sum">
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a">Crown: </div>
+					<div class="ui-block-b">455</div>
+					<span id="spCrown" class="ui-li-count">4</span>
+				</fieldset>
+			</li>
+		*/
+		
+		/*
+		
+		var x=document.getElementById("frm");
+		var textString="<tr><th>class</th><th>type</th><th>name</th><th>id</th><th>value</th><th>placeolder</th></tr>";		
+
+		var className="";
+		var placeHolder="";
+		var name="";
+		var val="";
+		var inputType="";
+		var inputId='';
+
+		//var c = "<td></td>";
+		//var r = "<tr></tr>";
+		
+			for (var i=0;i<x.length;i++)
+				{	
+				//html way
+				className = "<td>" + x.elements[i].className + "</td>";
+				inputType =  "<td>" + x.elements[i].type + "</td>";
+				name = "<td>" + x.elements[i].name + "</td>";
+				inputId =  "<td>" + x.elements[i].id + "</td>";
+				val = "<td>" + x.elements[i].value + "</td>";
+				placeHolder = "<td>" + x.elements[i].placeholder + "</td>";
+				textString = textString + "<tr>" + className + inputType + name + inputId + val + placeHolder  + "</tr>";
+				}
+				
+		$("#ResultsTable").html(textString);
+		
+		*/
+
+		
+		}
+		
+		function jumpToAnchor(p) {
+			window.location = window.location + "#page2";
+		}
+		
+		</script>
+ <!-- <style>#field { margin-left: .5em; float: left; }
+  	#field, label { float: left; font-family: Arial, Helvetica, sans-serif; font-size: small; }
+	br { clear: both; }
+	input { border: 1px solid black; margin-bottom: .5em;  }
+	input.error { border: 1px solid red; }
+	label.error {
+		background: url('http://dev.jquery.com/view/trunk/plugins/validate/demo/images/unchecked.gif') no-repeat;
+		padding-left: 16px;
+		margin-left: .3em;
+                color: red;
+	}
+	label.valid {
+		background: url('http://dev.jquery.com/view/trunk/plugins/validate/demo/images/checked.gif') no-repeat;
+		display: block;
+		width: 16px;
+		height: 16px;
+	}
+</style>-->
+	</body>
+</html>
