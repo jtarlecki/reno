@@ -495,101 +495,30 @@
 		
 		function Sector(sector)
 			{
-			this.arrayDollarsPerLF 		= buildArray("DollarsPerLF");
-			this.arrayDollarsPerSF 		= buildArray("DollarsPerSF");
-			this.arrayDollarsPerUnit 	= buildArray("DollarsPerUnit");
-			this.totalDollarsPerLF 		= NaNtoZero(sumArray(this.arrayDollarsPerLF));
-			this.totalDollarsPerSF 		= NaNtoZero(sumArray(this.arrayDollarsPerSF));
-			this.totalDollarsPerUnit 	= NaNtoZero(sumArray(this.arrayDollarsPerUnit));
-			this.totalLF 				= NaNtoZero(getTotalLF());
-			this.totalSF 				= NaNtoZero(parseFloat($('[name*="' + sector + 'SF"]').val()));	
+			this.arrayDollarsPerLF = buildArray("DollarsPerLF");
+			this.arrayDollarsPerSF = buildArray("DollarsPerSF");
+			this.arrayDollarsPerUnit = buildArray("DollarsPerUnit");
+			this.totalDollarsPerLF = NaNtoZero(sumArray(this.arrayDollarsPerLF));
+			this.totalDollarsPerSF = NaNtoZero(sumArray(this.arrayDollarsPerSF));
+			this.totalDollarsPerUnit = NaNtoZero(sumArray(this.arrayDollarsPerUnit));
+			this.totalLF = NaNtoZero(getTotalLF());
+			this.totalSF = NaNtoZero(parseFloat($('[name*="' + sector + 'SF"]').val()));	
 				
 
-			this.totalCost				= getTotalCost(this);
-			this.cnt					= this.arrayDollarsPerLF.length + this.arrayDollarsPerSF.length + this.arrayDollarsPerUnit.length ;
+			this.totalCost = getTotalCost(this);
+			this.cnt = this.arrayDollarsPerLF.length + this.arrayDollarsPerSF.length + this.arrayDollarsPerUnit.length ;
 			SectorCount.push(this.cnt);
 			Sectors.push(this.totalCost);
 			
+			
+			
 
 				if (sector=="Sheetrock") {
-					$.each(['framing','layout','sheetrocksurface'/*,'SheetrockPiece','SheetrockScrews'*/], function(index, variable) {
-						alert(variable + ' (element): ' + (findCheckedInputElements(variable, 'label')).join(", "));
-						alert(variable + ' (sum): ' + sumArray(findCheckedInputElements(variable, 'value')) );
+					$.each(['framing','layout','sheetrocksurface'], function(index, variable) {
+						//alert((findCheckedInputElements(variable, 'label')).join(", "));
+						//alert( sumArray(findCheckedInputElements(variable, 'value')) );
 					});
-				
-				/*	sheet rock only has (...DollarsPerUnit) values.  They are additive when they should be parsed
-					eg)
-					SheetrockDollarsPerUnit = 21;
-					SheetrockScrewDollarsPerUnit = 37;
-					
-				*/	
-					alert('this.totalDollarsPerLF: ' + this.totalDollarsPerLF);
-					alert('this.totalDollarsPerSF: ' + this.totalDollarsPerSF);
-					alert('this.totalDollarsPerUnit: ' + this.totalDollarsPerUnit);
-					
-					var DrywallScrewsPerSheet = 20;
-					//alert(DrywallScrewsPerSheet + );
-					
 				}
-
-						/*
-						
-						<ul data-role="listview" id="SheetrockUL">
-						
-							<li id="framing" data-role="fieldcontain" >
-								<fieldset data-role="controlgroup" data-type="horizontal">
-									<legend>New Framing</legend>
-										<label for="framing1">1 x 3s</label>
-										<input type="radio" name="framingChoice" id="framing1" value="on" class="Sheetrock"/>
-										<label for="framing2">2 x 4s</label>
-										<input type="radio" name="framingChoice" id="framing2" value="off" class="Sheetrock"/>
-										<label for="framing3">N/A</label>
-										<input type="radio" name="framingChoice" id="framing3" value="other" checked="checked" class="Sheetrock"/>
-								</fieldset>
-							</li>
-						
-							<li id="layout" data-role="fieldcontain" >
-								<fieldset data-role="controlgroup" data-type="horizontal">	
-									<legend>Layout</legend>
-										<label for="layout1">16" o.c.</label>
-										<input type="radio" name="layoutChoice" id="layout1" value="16" class="Sheetrock" />
-										<label for="layout2">24" o.c.</label>
-										<input type="radio" name="layoutChoice" id="layout2" value="24" class="Sheetrock"/>
-										<label for="layout3">N/A</label>
-										<input type="radio" name="layoutChoice" id="layout3" value="16" checked="checked" class="Sheetrock"/>
-								</fieldset>
-							</li>
-							
-							<li id="framingprice" data-role="fieldcontain">
-							 <label for="SheetrockFramingDollarsPerUnit">Framing Price</label>
-							 <input class="Sheetrock" type="text" name="SheetrockFramingDollarsPerUnit" id="SheetrockFramingDollarsPerUnit" value="" placeholder="$ / piece" />
-							</li>
-							
-							<li id="sheetrocksurface" data-role="fieldcontain">
-								<fieldset data-role="controlgroup" data-type="horizontal">
-									<legend>Sheetrock Surfaces:</legend>
-										<input class="Sheetrock" type="checkbox" name="Sheetrock-Wall" id="Sheetrock-Wall"  />
-										<label for="Sheetrock-Wall">Wall</label>
-						
-										<input class="Sheetrock" type="checkbox" name="Sheetrock-Ceiling" id="Sheetrock-Ceiling" />
-										<label for="Sheetrock-Ceiling">Ceiling</label>
-								</fieldset>
-							</li>
-							
-							<li id="SheetrockPiece" data-role="fieldcontain">
-							 <label for="SheetrockDollarsPerUnit">Sheetrock</label>
-							 <input class="Sheetrock" type="text" name="SheetrockDollarsPerUnit" id="SheetrockDollarsPerUnit" value="" placeholder="$ / sheet" />
-							</li>
-							
-							<li id="SheetrockScrews" data-role="fieldcontain">
-							 <label for="SheetrockScrewDollarsPerUnit">Drywall Screws</label>
-							 <input class="Sheetrock" type="text" name="SheetrockScrewDollarsPerUnit" id="SheetrockScrewDollarsPerUnit" value="" placeholder="$ / lb" />
-							</li>
-						
-						</ul>
-						
-						*/
-				
 			
 			function findCheckedInputElements(inputElementId,outputElementType)
 				{
@@ -598,14 +527,14 @@
 					$('#' + inputElementId + ' input:checked').each(function() {
 						id = $(this).attr("id");
 						var v = $(this).val();
-						var a = $('#' + inputElementId + ' label[for=' + id + ']').text();
+						var a=$('#' + inputElementId + ' label[for=' + id + ']').text();
 							if (outputElementType=='label'){
 								arr.push(a);
 							} else if (outputElementType=='value'){
 								arr.push(v);
 							}	
 					});
-				return arr;			
+				return arr; 			
 				}	
 					
 			function getTotalCost(x)
@@ -662,15 +591,16 @@
 		$.each(RoomSectors, function(index, sect) { 
 			switch(sect)
 			{
-			case "Room": 		oRoom		= new Sector(sect); break;
-			case "Crown": 		oCrown 		= new Sector(sect); break;
-			case "Sheetrock": 	oSheetrock 	= new Sector(sect); break;
-			case "Door": 		oDoor 		= new Sector(sect); break;
-			case "Baseboard": 	oBaseboard 	= new Sector(sect); break;
-			case "Floor": 		oFloor 		= new Sector(sect); break;
-			case "Paint": 		oPaint 		= new Sector(sect); break;
+			case "Room": oRoom = new Sector(sect); break;
+			case "Crown": oCrown = new Sector(sect); break;
+			case "Sheetrock": oSheetrock = new Sector(sect); break;
+			case "Door": oDoor = new Sector(sect); break;
+			case "Baseboard": oBaseboard = new Sector(sect); break;
+			case "Floor": oFloor = new Sector(sect); break;
+			case "Paint": oPaint = new Sector(sect); break;
 			}
 			
+
 			//var sect = sect;
 			var $cls = $('[class*="' + sect + '"]');
 			
@@ -684,15 +614,18 @@
 					smltbl = smltbl + "<tr>" + t + "</tr>";
 				});
 			
+			
 		});
 		
 			///*
-			alert("oSheetrock.totalSF: " + oSheetrock.totalSF);
+			//alert("oSheetrock.totalSF: "+oSheetrock.totalSF);
 			oSheetrock.totalSF = (oBaseboard.totalLF * oRoom.totalLF);
-			alert("oSheetrock.totalSF: " + oSheetrock.totalSF );
-			//*/	
+			//alert("oSheetrock.totalSF: " + oSheetrock.totalSF );
+			//*/
+			
 		
 		//$("#SmallTable").html(smltbl);
+		
 		
 		$('#SumUL li:not(:first)').remove();
 		$.each(RoomSectors, function(index, value) { 	
@@ -703,14 +636,16 @@
 				.find(".ui-block-a")
 				.html(value + ": ");
 					if (value != "Room") {
-							$('#SumUL li:last .ui-block-b').html(Sectors[index]).formatCurrency(); 						// Insert  $ amount here
-							$('#SumUL li:last .ui-li-count').html(SectorCount[index]);									// Insert count of detail report here		
+							$('#SumUL li:last .ui-block-b').html(Sectors[index]).formatCurrency(); 		// Insert  $ amount here
+							$('#SumUL li:last .ui-li-count').html(SectorCount[index]);					// Insert count of detail report here		
 					} else {
-							$('#SumUL li:last .ui-block-b').html(sumArray(Sectors)).formatCurrency(); 					// Insert  $ amount here
+							$('#SumUL li:last .ui-block-b').html(sumArray(Sectors)).formatCurrency(); 	// Insert  $ amount here
 							$('#SumUL li:last .ui-li-count').html(Sectors.length-1);									// Insert count of detail report here								
 					};
 		});		
 		
+
+
 		
 		}
 		
