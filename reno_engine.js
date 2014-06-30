@@ -2,7 +2,7 @@ var hardwoodWidth = 0;
 var hardwoodNailing;
 
 //Hardwoods
-if (hardwoodWidth > 2.5){
+if (hardwoodWidth > 2.5) {
 	hardwoodNailing = 5;
 } else {	
 	hardwoodNailing = 7;
@@ -10,33 +10,69 @@ if (hardwoodWidth > 2.5){
 
 
 
-function isEmpty(input){
-	if (input=="" || input==null) {return 0;} else {return input;}
+function isEmpty(input) {
+	if (input=="" || input==null) {
+		return 0;
+	} else {
+		return input;
+	}
+}
+
+function NaNtoZero(input) {
+	if (isNaN(input)) {
+		return 0;
+	} else {
+		return input;
+	}
 }
 
 /*
 Main function
 */
 
-function doit(){	
+function doit() {	
 
-	function KeyArgs(){
+	function KeyArgs() {
 		this.markup = 1.1;
+		this.framing = 8; 	// 8' framing assumed
 	}
 
-	function Room(){
-		this.ceilingSF = $('#RoomFloorSF').val();
-		this.wallSF = $('#RoomSheetrockLF').val();
+	function Room() {
+		
+		var key = new KeyArgs();
+		
+		this.ceilingSF = parseFloat($('#RoomFloorSF').val());
+		this.wallSF = parseFloat($('#RoomSheetrockLF').val());
+		this.roomPerimeterFt = parseFloat($('#RoomBaseboardLF').val());
+		this.roomHeightFt = parseFloat($('#RoomSheetrockLF').val());
+		/* rock laying horizontally on walls */
+		sheetRockCourses = Math.ceil(this.roomHeightFt / 4); 
+		this.sheetRockWallCount = sheetRockCourses * this.roomPerimeterFt;
+		this.sheetRockCeilingCount = Math.ceil((this.ceilingSF / 32) * key.markup);
+		
+		/*
+		console.log('/n^^^^^^^^^^^^^^^^^^^/n');
+		console.log(this.roomPerimeterFt);
+		console.log(sheetRockCourses);
+		console.log(this.sheetRockWallCount);
+		console.log(this.sheetRockCeilingCount);
+		
+		console.log('/n^^^^^^^^^^^^^^^^^^^/n');
+		*/
+		
 	} 
 
-	function Sheetrock(){
+	function Sheetrock() {
 		
 		room = new Room();
+		var key = new KeyArgs();
 		
 		// assumptions
-		this.screwsPerSheet = 43; // screws per sheet. 
-		this.screwLbsPerSF = 400; // SqFt
+		this.screwsPerSheet = 43; 		// screws per sheet. 
+		this.screwLbsPerSF = (1/400); 	// SqFt
+		this.SF = 0;					// __init__ = 0
 		
+		/*
 		var id = $('#layout input:checked').attr("id");
 		var framingLabel=($('label[for='+id+']').text());
 		
@@ -55,36 +91,106 @@ function doit(){
 		var b = $('#Sheetrock-Ceiling').is(':checked');
 		console.log('Sheetrock-Ceiling: '+b);
 		console.log('============================\n');
-		calc();
+		*/
 		
-		function calc(){
-			sf = 0;
-			if ($('#Sheetrock-Wall').is(':checked')){
-				sf += room.wallSF;
-			}
-			if ($('#Sheetrock-Ceiling').is(':checked')){
-				sf += room.wallSF;
-			}
-			console.log('sf: '+sf);
+		this.sheetRockWallCount = 0;
+		this.sheetRockCeilingCount = 0;
+		this.SF = 0;
+		
+		if ($('#Sheetrock-Wall').is(':checked')){
+			this.sheetRockWallCount = room.sheetRockWallCount;
+			this.SF += room.wallSF;
 		}
+		if ($('#Sheetrock-Ceiling').is(':checked')){
+			this.sheetRockCeilingCount = room.sheetRockCeilingCount;
+			this.SF += room.ceilingSF;
+		}
+		
+		
 		/*
+		[] framing price
+		[x] sheetrock price
+		[x] screws price
+		*/
+		
+		this.screwPrice = (this.screwLbsPerSF * this.SF) * parseFloat($('#SheetrockScrewDollarsPerUnit').val());
+		this.sheetrockPrice = (this.sheetRockWallCount + this.sheetRockCeilingCount) * parseFloat($('#SheetrockDollarsPerUnit').val());
+		
+		/*
+		When rock is hung length-wise and perpendicular to its framing members, 
+		each sheet crosses the paths seven (7) framing members at 4' of length.
+		The (+1) makes sure to include the extra framing member at the end
+		*/
+		
+		this.framingPrice =
+			Math.ceil((this.sheetRockWallCount * 7 * 4 ) / key.framing) +
+			Math.ceil((this.sheetRockCeilingCount * 7 * 4 ) / key.framing);
+		
+		this.price = this.screwPrice + this.sheetrockPrice + this.framingPrice;
 		
 		
-		New Framing
-		Layout
-		SheetrockFramingDollarsPerUnit 
-		Sheetrock Surfaces
-		SheetrockDollarsPerUnit
-		SheetrockScrewDollarsPerUnit
+		
+		/*
+		console.log('\n%%%%%%%%%%%%%%%%%%%%%%%%%');
+		console.log(this.screwPrice);
+		console.log(this.sheetrockPrice);
+		console.log(this.framingPrice);
+		console.log('this.price: ' + this.price);
+		console.log('%%%%%%%%%%%%%%%%%%%%%%%%%\n');
+		*/
+		
+	}
+	
+	function Paint() {
+		
+		key = new KeyArgs();
+		
+		console.log('>>>> Paint <<<<<');
+		
+		areas = ['Wall', 'Ceiling'/*, 'Trim', 'Door', 'Floor'*/];
+		$.each(areas, function(index, value){
+				var paintSurface = value
+				var v = $('#cb-' + value).is(':checked');
+				console.log(value + ': ' + v);
+				if (v){
+					$.each([0,1,2,3], function(index, value){
+						console.log('#Paint' + paintSurface + value);
+						console.log("$('#Paint' + paintSurface + value).val(): " + $('#Paint' + paintSurface + value).val());
+					});
+
+				}
+		});
+		
+		
+		
+		/*
+		var $id = $('id^=cb-');
+		alert($id);
+		$id.each(function(index, value) {
+			alert('paint-loop');
+			var $me=$(this);
+			var b = $me.text() + ' : ' + $me.is(':checked')
+			//var a=$('#' + $me.attr('id') + ' label[for=' + $me.attr('id') + ']').text()
+			//var a = $('label[for=' + $me.attr('id') + ']').text()
+			
+			console.log('>>>>');
+			console.log(b);
+			console.log('>>>>');
+			
+			
+			$.each(["id", "name", "value", "placeholder"], function (index, value){
+				t = t + "<td>" + isEmpty($me.attr(value)) + "</td>";
+			});
+			
+			
+		});
 		*/
 	}
 
+	p = new Paint();
 	r = new Room();
-	console.log('r.ceilingSF: ' + r.ceilingSF);
-	console.log('r.wallSF: ' + r.wallSF);
-	s = new Sheetrock();
 
-	function Sector(sector){
+	function Sector(sector) {
 
 		this.arrayDollarsPerLF = buildArray("DollarsPerLF");
 		this.arrayDollarsPerSF = buildArray("DollarsPerSF");
@@ -101,6 +207,7 @@ function doit(){
 		SectorCount.push(this.cnt);
 		Sectors.push(this.totalCost);
 		
+		/*
 		console.log('sector: ' + sector);
 		console.log('-------------------------');
 		console.log('arrayDollarsPerLF :' + this.arrayDollarsPerLF);
@@ -116,7 +223,9 @@ function doit(){
 		console.log('this.totalCost :' + this.totalCost);
 		console.log('this.cnt :' + this.cnt);
 		console.log('\n');
-
+		*/
+		
+		
 		if (sector=="Sheetrock") {
 			console.log('\n++++++++++++++++++\n');
 			
@@ -144,17 +253,15 @@ function doit(){
 			return arr; 			
 		}	
 				
-		function getTotalCost(x){
+		function getTotalCost(x) {
 			return (x.totalLF * x.totalDollarsPerLF + x.totalSF * x.totalDollarsPerSF); //+x.totalUnit * x.totalDollarsPerUnit		
 		}
 		
-		function NaNtoZero(input){
-			if (isNaN(input)){return 0;} else {return input;}
-		}
+
 		
-		function getTotalLF(){
+		function getTotalLF() {
 			var ans;	
-			if (sector=="Door"){
+			if (sector=="Door") {
 				ans = (( 2*parseFloat($('#DoorHeightInches').val()) + parseFloat($('#DoorWidthInches').val()) ) / 12 );
 			} else {
 				ans = parseFloat($('[name*="' + sector + 'LF"]').val());
@@ -162,7 +269,7 @@ function doit(){
 			return ans;
 		}
 
-		function buildArray(v){
+		function buildArray(v) {
 			var arr=[];
 			$('[class*="' + sector + '"][name*=' + v + ']').each(function(index, value) {
 				arr.push($(this).val());
@@ -192,6 +299,7 @@ function doit(){
 	var SectorCount=[];
 	var SectorsTotalCost=0;
 
+	/* build an html table for debugging  */
 	var smltbl="<tr><th></th><th>id</th><th>name</th><th>value</th><th>units</th></tr>";	
 
 	$.each(RoomSectors, function(index, sect) { 
@@ -204,11 +312,9 @@ function doit(){
 			case "Floor": oFloor = new Sector(sect); break;
 			case "Paint": oPaint = new Sector(sect); break;
 		}
+				
 		
-
-		//var sect = sect;
 		var $cls = $('[class*="' + sect + '"]');
-		
 		smltbl = smltbl + '<th rowspan="' + ($cls.length+1) + '">' + sect + '</th>'
 		$cls.each(function(index, value) {
 			var $me=$(this);
@@ -222,14 +328,8 @@ function doit(){
 		
 	});
 
-		
-	console.log("oSheetrock.totalSF: "+oSheetrock.totalSF);
-	oSheetrock.totalSF = (oBaseboard.totalLF * oRoom.totalLF);
-	console.log("oSheetrock.totalSF: " + oSheetrock.totalSF );
-	console.log("oRoom: " + oRoom);
-
 	$("#SmallTable").html(smltbl);
-
+	/* */
 
 	$('#SumUL li:not(:first)').remove();
 	$.each(RoomSectors, function(index, value){ 	
@@ -237,6 +337,7 @@ function doit(){
 			.clone(true)
 			.show()
 			.insertAfter('#SumUL li:last')
+			.attr('id', 'Sum'+value)
 			.find(".ui-block-a")
 			.html(value + ": ");
 		if (value != "Room"){
@@ -246,8 +347,13 @@ function doit(){
 				$('#SumUL li:last .ui-block-b').html(sumArray(Sectors)).formatCurrency(); 	// Insert  $ amount here
 				$('#SumUL li:last .ui-li-count').html(Sectors.length-1);					// Insert count of detail report here								
 		};
-	});		
+	});	
 
+	// this is filthy
+	
+	sheetrock = new Sheetrock();
+	$('#SumSheetrock .ui-block-b').html(NaNtoZero(sheetrock.price)).formatCurrency();
+	
 }
 
 /*
