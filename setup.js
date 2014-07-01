@@ -1,17 +1,17 @@
 var i = 1;	//Crown counter
 var j = 1; 	//Baseboard counter
-var RoomSectors = ["Room", "Crown", "Sheetrock", "Door", "Baseboard", "Floor", "Paint"];
+//var RoomSectors = ["Room", "Crown", "Sheetrock", "Door", "Baseboard", "Floor", "Paint"];
+var RoomSectors = ["Crown", "Sheetrock", "Door", "Baseboard", "Floor", "Paint", "Room"];
 	
 $(document).ready(function() {
 	$('#page1 form').submit(function(e) {
 		e.preventDefault();
-		alert('page1 form');
 		doit();
 	});			
 });
 
 //Hide this elements on initialize
-$("#layout, #framingprice, #PaintObj, #Sum, #SheetrockPiece, #SheetrockScrews, #err, #popupVal").hide();
+$("#layout, #framingprice, #PaintObj, #SumUL, #SheetrockPiece, #SheetrockScrews, #err, #popupVal").hide();
 
 $("#AddBaseboard, #AddCrown").click(function(){       
 	var trim = $(this).attr("id").split('Add').pop();
@@ -132,17 +132,32 @@ $('input[name*="cb-"]').click(function () {
 //Random numbers for input, packaged into a checkbox at top.
 $('#rnd').click(function () {
 	var b=$(this).attr("checked")=="checked";
+
+	
 	$.each(RoomSectors, function(index, value) { 	
+		
+		
+
 		$('[class*="' + value + '"]').each(function() {
 				if ($(this).attr("type")=="text") {
-						if (b){
+						if (b) {
 							$(this).val(Math.floor((Math.random()*100)+1));
-						}else{
+						} else {
 							$(this).val("");
 						} 
 				}
 		});
+		
+		$('#' + value).find("a").trigger("click");
+		//sleep(10);
+	
 	});
+
+	function sleep(miliseconds) {
+		var currentTime = new Date().getTime();
+		while (currentTime + miliseconds >= new Date().getTime()) {}
+	}
+		
 });
 
 

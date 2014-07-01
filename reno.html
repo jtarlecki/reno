@@ -2,21 +2,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Estimator</title>
+		<title>RE</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 		<meta charset="utf-8">
 		<meta name="description" content="A mobile interface to help estimate the costs of doing a major room renovation">
-		<meta name="keywords" content="Calculator,Renovation,Sheetrock,Crown Moulding,Baseboard,Flooring,South Philly,Occupy Wolf Street">
+		<meta name="keywords" content="Calculator,Renovation,Sheetrock,Crown Moulding,Baseboard,Flooring,South Philly,Occupy Wolf Street,Jay Tarlecki">
+		
 		
 		<!-- CUSTOM THEME!!!
 		<link rel="stylesheet" href="http://jaytarlecki.com/m/themes/Ren.min.css" />
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css" />
+		
 		<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 		-->
 		
 		<!---->
+		
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+		<link rel="stylesheet" href="themes/black_greens.css" />
 		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 		<script src="jquery.formatCurrency-1.4.0.min.js"></script>
@@ -28,17 +32,17 @@
 
 
 
-<div data-role="page" id="page1" >
+<div data-role="page" id="page1" data-theme="a">
 
+	<!--<img src="http://4.bp.blogspot.com/-fZ21sILnkLY/T58XL9fzSzI/AAAAAAAAAVA/2DXdHosxBEQ/s1600/OWS2.jpg" height=75 width=250></br>-->
 
-
-	<div data-role="header">
-		<h1 id="address"><!--<img src="http://4.bp.blogspot.com/-fZ21sILnkLY/T58XL9fzSzI/AAAAAAAAAVA/2DXdHosxBEQ/s1600/OWS2.jpg" height=75 width=250></br>-->Major Renovation Estimator</br>"Mobile App"</h1>
+	<div data-role="header" >
+		<h1 id="address">Major Renovation Estimator</h1>
 	</div>
 	
-	<div data-role="content" data-theme="a">
+	<div data-role="content" >
 		
-		<div data-role="collapsible-set" data-theme="c" >
+		<div data-role="collapsible-set" >
 			
 			<form id="frm" data-ajax="false" data-mini="true">	
 
@@ -47,10 +51,8 @@
 					<label for="rnd">Random Number Generator</label>
 				</fieldset>
 			
-
-
 			
-				<div data-role="collapsible" id="RoomProfile" class="content-primary">
+				<div data-role="collapsible" id="Room" class="content-primary">
 					<h3>Room Profile</h3>
 						<ul data-role="listview">
 							<li data-role="fieldcontain">
@@ -252,58 +254,63 @@
 
 	
 				<ul data-role="listview" data-inset="true">
-
 						<fieldset class="ui-grid-a">
 							<div class="ui-block-a"><button id="Reset" type="reset">Reset</button></div>
 							<div class="ui-block-b"><a href="#page2" style="text-decoration: none" data-transition="flip"><button type="submit" data-theme="b" onclick="doit();">Calculate</button></a></div>
 						</fieldset>
-
-					
-				</ul>
-				
+				</ul>	
 				
 			</form>
 				
-
-			
-			<div data-role="footer">
-				<h1>Uncopyright<br><!--</br>Placing trademarks on commodities is where profit begins... and freedom ends.</br>--><a data-theme="c" target="_blank" href="http://jaytarlecki.com">Jay Tarlecki</a><br></h1>
-			</div>
-
 		</div>
+	
 	</div>
 
+	<div data-role="footer" data-theme="a">
+		<h1>Uncopyright<br><a target="_blank" href="http://jaytarlecki.com/uncopyright/uncopyright/" style="color:#009245;">Jay Tarlecki</a><br></h1>
+	</div>
+	
 </div>
 
 <!--<div id="page2" data-role="page" data-add-back-btn="true">-->
-<div id="page2" data-role="page" data-add-back-btn="true">
+<div id="page2" data-role="page" data-add-back-btn="true" >
 	
-	<div data-role="header">
+	<div data-role="header" >
 		<h1>Estimate</h1>
 	</div>
 
-	<div data-role="content">
-		<h2>Room Summary</h2>
-		<ul id="SumUL" data-role="listview" data-theme="a">
-			<!-- this first id is for cloning ONLY!!-->
-			<li id="Sum">
-				<fieldset class="ui-grid-a">
-					<div class="ui-block-a">Insert Sector Identifier</div>
-					<div class="ui-block-b">Insert $ amount</div>
-					<span id="spCrown" class="ui-li-count">Insert count of detail report</span>
+	<div data-role="content" >
+	
+		<ul id="SumUL" data-role="listview" data-inset="true" data-theme="d">
+			
+			<li id="Sum" data-theme="a">
+				<fieldset class="ui-grid-a" >
+					<div class="ui-block-a" >fill in text</div>
+					<div class="ui-block-b" >fill in text</div>
+					<span id="cnt" class="ui-li-count" >fill in number</span>
 				</fieldset>
 			</li>
+		</ul>
+
+		<ul id="Results" data-role="listview" data-inset="true" >
+			
+			<li id="Result" data-role="data-divider" data-theme="d">
+				<h1>Results</h1>
+			</li>	
+
 		</ul>
 		
 		<br>
 		<!-- support table, for building app -->
+		<!--
 		<table id="SmallTable" border="1"></table>
 		<br>
 		<table id="ResultsTable" border="1"></table>
+		--->
 	</div>
 
-	<div data-role="footer">
-		<h1>Uncopyright<br><a target="_blank" href="http://jaytarlecki.com">Jay Tarlecki</a><br></h1>
+	<div data-role="footer" data-theme="a">
+		<h1>Uncopyright<br><a target="_blank" href="http://jaytarlecki.com/uncopyright/uncopyright/" style="color:#009245;">Jay Tarlecki</a><br></h1>
 	</div>
 	
 </div>

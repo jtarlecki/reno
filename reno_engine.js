@@ -8,8 +8,6 @@ if (hardwoodWidth > 2.5) {
 	hardwoodNailing = 7;
 }
 
-
-
 function isEmpty(input) {
 	if (input=="" || input==null) {
 		return 0;
@@ -107,12 +105,6 @@ function doit() {
 		}
 		
 		
-		/*
-		[] framing price
-		[x] sheetrock price
-		[x] screws price
-		*/
-		
 		this.screwPrice = (this.screwLbsPerSF * this.SF) * parseFloat($('#SheetrockScrewDollarsPerUnit').val());
 		this.sheetrockPrice = (this.sheetRockWallCount + this.sheetRockCeilingCount) * parseFloat($('#SheetrockDollarsPerUnit').val());
 		
@@ -143,25 +135,51 @@ function doit() {
 	
 	function Paint() {
 		
-		key = new KeyArgs();
+		var room = new Room();
+		
+		var sqft = {
+			Wall: room.wallSF,
+			Ceiling: room.ceilingSF
+		};
+		
+		var price = 0;
 		
 		console.log('>>>> Paint <<<<<');
 		
-		areas = ['Wall', 'Ceiling'/*, 'Trim', 'Door', 'Floor'*/];
+		var areas = ['Wall', 'Ceiling'/*, 'Trim', 'Door', 'Floor'*/];
 		$.each(areas, function(index, value){
 				var paintSurface = value
 				var v = $('#cb-' + value).is(':checked');
 				console.log(value + ': ' + v);
 				if (v){
-					$.each([0,1,2,3], function(index, value){
-						console.log('#Paint' + paintSurface + value);
+					$.each([0,1,2,3], function(index, value) {
 						console.log("$('#Paint' + paintSurface + value).val(): " + $('#Paint' + paintSurface + value).val());
+						console.log('sqft[paintSurface]: ' + sqft[paintSurface]);
 					});
-
+					// total = (# coats) * (# gallons) * ($/gallon)
+					console.log(
+						parseFloat($('#Paint' + paintSurface + 1).val())	// primer # coats
+						* (Math.ceil(sqft[paintSurface] / parseFloat(400)))	// primer # gallons
+						* parseFloat($('#Paint' + paintSurface + 0).val())	// primer $/gallon
+						+ 
+						parseFloat($('#Paint' + paintSurface + 3).val())	// paint # coats
+						* (Math.ceil(sqft[paintSurface] / parseFloat(400)))	// paint # gallons
+						* parseFloat($('#Paint' + paintSurface + 2).val())	// paint $/gallon
+						);
+					price += 
+						parseFloat($('#Paint' + paintSurface + 1).val())	// primer # coats
+						* (Math.ceil(sqft[paintSurface] / parseFloat(400)))	// primer # gallons
+						* parseFloat($('#Paint' + paintSurface + 0).val())	// primer $/gallon
+						+ 
+						parseFloat($('#Paint' + paintSurface + 3).val())	// paint # coats
+						* (Math.ceil(sqft[paintSurface] / parseFloat(400)))	// paint # gallons
+						* parseFloat($('#Paint' + paintSurface + 2).val())	// paint $/gallon
+						;
 				}
 		});
 		
-		
+		console.log('price: ' + price);
+		this.price = price;
 		
 		/*
 		var $id = $('id^=cb-');
@@ -313,7 +331,7 @@ function doit() {
 			case "Paint": oPaint = new Sector(sect); break;
 		}
 				
-		
+		/*
 		var $cls = $('[class*="' + sect + '"]');
 		smltbl = smltbl + '<th rowspan="' + ($cls.length+1) + '">' + sect + '</th>'
 		$cls.each(function(index, value) {
@@ -324,36 +342,63 @@ function doit() {
 			});
 			smltbl = smltbl + "<tr>" + t + "</tr>";
 		});
-		
+		*/
 		
 	});
 
-	$("#SmallTable").html(smltbl);
-	/* */
+	//$("#SmallTable").html(smltbl);
+	
+	
+	$('#Results li:not(:first)').remove();  // clear out any garbage from list
 
-	$('#SumUL li:not(:first)').remove();
-	$.each(RoomSectors, function(index, value){ 	
+	
+	$.each(RoomSectors, function(index, value) { 	
 		$('#Sum')
+			.removeClass('ui-corner-top')
+			.removeClass('ui-corner-bottom')
 			.clone(true)
-			.show()
-			.insertAfter('#SumUL li:last')
-			.attr('id', 'Sum'+value)
+			.insertAfter('#Results li:last')
+			.attr('id', 'Sum' + value)
 			.find(".ui-block-a")
 			.html(value + ": ");
-		if (value != "Room"){
-				$('#SumUL li:last .ui-block-b').html(Sectors[index]).formatCurrency(); 		// Insert  $ amount here
-				$('#SumUL li:last .ui-li-count').html(SectorCount[index]);					// Insert count of detail report here		
+		if (value != "Room") {
+				$('#Results li:last .ui-block-b')
+					.html(Sectors[index])													// Insert  $ amount here
+					.formatCurrency();		
+				$('#Results li:last .ui-li-count').html(SectorCount[index]);				// Insert count of detail report here		
 		} else {
-				$('#SumUL li:last .ui-block-b').html(sumArray(Sectors)).formatCurrency(); 	// Insert  $ amount here
-				$('#SumUL li:last .ui-li-count').html(Sectors.length-1);					// Insert count of detail report here								
+				$('#Results li:last .ui-block-a').html(value + ' Total:');
+				$('#Results li:last .ui-block-b')
+					.html(sumArray(Sectors))
+					.formatCurrency(); 														// Insert  $ amount here
+				$('#Results li:last .ui-li-count').html(Sectors.length-1);					// Insert count of detail report here								
+				$('#Results li:last')
+					.attr('data-theme', 'e')
+
+					.wrapInner('<h1 class="ui-li-heading"></h1>');
 		};
 	});	
-
+	// Cleanup some of the terribleness of jquery mobile
+	$('#Results li:last')
+		.addClass('ui-corner-bottom')
+		.removeClass('ui-body-a')
+		.addClass('ui-body-e');
+	
 	// this is filthy
-	
 	sheetrock = new Sheetrock();
-	$('#SumSheetrock .ui-block-b').html(NaNtoZero(sheetrock.price)).formatCurrency();
+	paint = new Paint();
+	$('#SumSheetrock .ui-block-b')
+		.html(NaNtoZero(sheetrock.price))
+		.formatCurrency();
+	$('#SumPaint .ui-block-b')
+		.html(NaNtoZero(paint.price))
+		.formatCurrency();
 	
+	
+	var total = sumArray(Sectors) + NaNtoZero(sheetrock.price) + NaNtoZero(paint.price); 
+	$('#SumRoom .ui-block-b')
+		.html(total)
+		.formatCurrency();
 }
 
 /*
