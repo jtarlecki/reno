@@ -136,7 +136,6 @@ $('#rnd').click(function () {
 	
 	$.each(RoomSectors, function(index, value) { 	
 		
-		
 
 		$('[class*="' + value + '"]').each(function() {
 				if ($(this).attr("type")=="text") {
@@ -148,7 +147,11 @@ $('#rnd').click(function () {
 				}
 		});
 		
-		$('#' + value).find("a").trigger("click");
+		/*
+		if (b) {
+			$('#' + value).find("a").trigger("click");
+		}
+		*/
 		//sleep(10);
 	
 	});

@@ -143,9 +143,10 @@ function doit() {
 		};
 		
 		var price = 0;
+		var count = 0;
 		
 		console.log('>>>> Paint <<<<<');
-		
+	
 		var areas = ['Wall', 'Ceiling'/*, 'Trim', 'Door', 'Floor'*/];
 		$.each(areas, function(index, value){
 				var paintSurface = value
@@ -175,11 +176,13 @@ function doit() {
 						* (Math.ceil(sqft[paintSurface] / parseFloat(400)))	// paint # gallons
 						* parseFloat($('#Paint' + paintSurface + 2).val())	// paint $/gallon
 						;
+					count+=1;
 				}
 		});
 		
 		console.log('price: ' + price);
 		this.price = price;
+		this.count = count;
 		
 		/*
 		var $id = $('id^=cb-');
@@ -390,10 +393,12 @@ function doit() {
 	$('#SumSheetrock .ui-block-b')
 		.html(NaNtoZero(sheetrock.price))
 		.formatCurrency();
+	// sheetrock has no count yet.
 	$('#SumPaint .ui-block-b')
 		.html(NaNtoZero(paint.price))
 		.formatCurrency();
-	
+	$('#SumPaint .ui-li-count')
+		.html(NaNtoZero(paint.count));	
 	
 	var total = sumArray(Sectors) + NaNtoZero(sheetrock.price) + NaNtoZero(paint.price); 
 	$('#SumRoom .ui-block-b')
