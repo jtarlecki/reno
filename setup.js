@@ -2,6 +2,13 @@ var i = 1;	//Crown counter
 var j = 1; 	//Baseboard counter
 //var RoomSectors = ["Room", "Crown", "Sheetrock", "Door", "Baseboard", "Floor", "Paint"];
 var RoomSectors = ["Crown", "Sheetrock", "Door", "Baseboard", "Floor", "Paint", "Room"];
+
+setTimeout(function() {
+  // Already scrolled?
+  if(window.pageYOffset !== 0) return;
+
+  window.scrollTo(0, window.pageYOffset + 1);
+}, 1);
 	
 $(document).ready(function() {
 	$('#page1 form').submit(function(e) {
@@ -119,7 +126,7 @@ $('input[name*="cb-"]').click(function () {
 			.attr("id", id);
 
 		var allInputs = $('#' + id + ' :input').addClass(p);
-		for (var n=0;n<allInputs.length;n++)
+		for (var n=0;  n<allInputs.length; n++)
 			{
 			$("#" + id).find("label").eq(n).prepend(clsName + " ");
 			$("#" + id).find("input").eq(n)
@@ -131,13 +138,17 @@ $('input[name*="cb-"]').click(function () {
 
 //Random numbers for input, packaged into a checkbox at top.
 $('#rnd').click(function () {
-	var b=$(this).attr("checked")=="checked";
-
+	
+	//var b=$(this).attr("checked")=="checked";
+	var b = $(this).is(':checked')
 	
 	$.each(RoomSectors, function(index, value) { 	
 		
+		console.log(value);
 
 		$('[class*="' + value + '"]').each(function() {
+				console.log($(this).attr("type")=="text");
+				console.log('b = ' + b);
 				if ($(this).attr("type")=="text") {
 						if (b) {
 							$(this).val(Math.floor((Math.random()*100)+1));

@@ -354,56 +354,63 @@ function doit() {
 	
 	$('#Results li:not(:first)').remove();  // clear out any garbage from list
 
-	
 	$.each(RoomSectors, function(index, value) { 	
+		
 		$('#Sum')
-			.removeClass('ui-corner-top')
-			.removeClass('ui-corner-bottom')
 			.clone(true)
 			.insertAfter('#Results li:last')
 			.attr('id', 'Sum' + value)
-			.find(".ui-block-a")
-			.html(value + ": ");
+			.removeClass('ui-first-child')
+			;
+			$me = $('#Results li:last')
+		
+		/* since JQM sucks, we need to reformat this ourselves by changing the classes */
 		if (value != "Room") {
-				$('#Results li:last .ui-block-b')
-					.html(Sectors[index])													// Insert  $ amount here
-					.formatCurrency();		
-				$('#Results li:last .ui-li-count').html(SectorCount[index]);				// Insert count of detail report here		
+				$me
+						.removeClass('ui-last-child')
+					.find('.ui-block-a')
+						.html(value + ": ")
+						.parent()
+					.find('.ui-block-b')
+						.html(Sectors[index])												
+						.parent()
+					.find('.ui-li-count')      
+						.html(SectorCount[index])
+					;		
 		} else {
-				$('#Results li:last .ui-block-a').html(value + ' Total:');
-				$('#Results li:last .ui-block-b')
-					.html(sumArray(Sectors))
-					.formatCurrency(); 														// Insert  $ amount here
-				$('#Results li:last .ui-li-count').html(Sectors.length-1);					// Insert count of detail report here								
-				$('#Results li:last')
-					.attr('data-theme', 'e')
+				$me
+						.addClass('ui-last-child')
+						.addClass('ui-body-e')
+						.wrapInner('<h1 class="ui-li-heading"></h1>')
+					.find('.ui-block-a')
+						.html(value + ' Total:')
+						.parent()
+					.find('.ui-block-b')
+						.html(sumArray(Sectors))	
+						.parent()
+					.find('.ui-li-count')
+						.html(Sectors.length-1)
+					;
 
-					.wrapInner('<h1 class="ui-li-heading"></h1>');
 		};
+	
 	});	
-	// Cleanup some of the terribleness of jquery mobile
-	$('#Results li:last')
-		.addClass('ui-corner-bottom')
-		.removeClass('ui-body-a')
-		.addClass('ui-body-e');
+	
 	
 	// this is filthy
 	sheetrock = new Sheetrock();
 	paint = new Paint();
-	$('#SumSheetrock .ui-block-b')
-		.html(NaNtoZero(sheetrock.price))
-		.formatCurrency();
-	// sheetrock has no count yet.
-	$('#SumPaint .ui-block-b')
-		.html(NaNtoZero(paint.price))
-		.formatCurrency();
-	$('#SumPaint .ui-li-count')
-		.html(NaNtoZero(paint.count));	
+	var total = sumArray(Sectors) + NaNtoZero(sheetrock.price) + NaNtoZero(paint.price);
 	
-	var total = sumArray(Sectors) + NaNtoZero(sheetrock.price) + NaNtoZero(paint.price); 
-	$('#SumRoom .ui-block-b')
-		.html(total)
-		.formatCurrency();
+	$('#SumSheetrock .ui-block-b').html(NaNtoZero(sheetrock.price)); // sheetrock has no count yet.
+	
+	$('#SumPaint .ui-block-b').html(NaNtoZero(paint.price));
+	$('#SumPaint .ui-li-count').html(NaNtoZero(paint.count));	
+	
+	$('#SumRoom .ui-block-b').html(total);
+
+	$('#Results li .ui-block-b').formatCurrency(); 	
+	
 }
 
 /*

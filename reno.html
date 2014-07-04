@@ -8,10 +8,21 @@
 		<meta name="description" content="A mobile interface to help estimate the costs of doing a major room renovation">
 		<meta name="keywords" content="Calculator,Renovation,Sheetrock,Crown Moulding,Baseboard,Flooring,South Philly,Occupy Wolf Street,Jay Tarlecki">
 		
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<!--
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 		<link rel="stylesheet" href="themes/black_greens.css" />
 		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+		<script src="jquery.formatCurrency-1.4.0.min.js"></script>
+		-->
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+		<link rel="stylesheet" href="themes/black_green143.css" />
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 		<script src="jquery.formatCurrency-1.4.0.min.js"></script>
 		
 	</head>
@@ -22,23 +33,24 @@
 
 	<!--<img src="http://4.bp.blogspot.com/-fZ21sILnkLY/T58XL9fzSzI/AAAAAAAAAVA/2DXdHosxBEQ/s1600/OWS2.jpg" height=75 width=250></br>-->
 
-	<div data-role="header" data-position="fixed" data-id="myheader">
+	<div data-role="header" data-position="fixed" data-id="myheader" data-theme="a">
+		<a href="#pageSettings" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext" data-transition="slide" data-direction="reverse">Options</a>
 		<h1 id="address">Renovation</h1>
+		<a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-notext">Search</a>
 	</div>
-	
-	<div data-role="content" >
-		
-		<div data-role="collapsible-set" >
-			
+
+	<div data-role="main" class="ui-content">
+
 			<form id="frm" data-ajax="false" data-mini="true">	
 
 				<fieldset data-role="controlgroup" data-type="horizontal">
 					<input class="Programmer" type="checkbox" name="rnd" id="rnd"  />
 					<label for="rnd">Random Number Generator</label>
 				</fieldset>
+	
+		<div data-role="collapsibleset" >
 			
-			
-				<div data-role="collapsible" id="Room" class="content-primary" ><!--data-collapsed="false"> --->
+				<div data-role="collapsible" id="Room" class="content-primary"><!--data-collapsed="false"> --->
 					<h3>Room Profile</h3>
 						<ul data-role="listview">
 							<li data-role="fieldcontain">
@@ -251,17 +263,19 @@
 		</div>
 	
 	</div>
+	
+	
 
 	<div data-role="footer" data-theme="a" data-position="fixed" data-id="myfooter">
-		<h1>Uncopyright<br><a target="_blank" href="http://jaytarlecki.com/uncopyright/uncopyright/" style="color:#009245;">Jay Tarlecki</a><br></h1>
+		<h1>Uncopyright | <a target="_blank" href="http://jaytarlecki.com/uncopyright/uncopyright/" style="color:#009245;">Jay Tarlecki</a><br></h1>
 	</div>
 	
 </div>
 
 <!--<div id="page2" data-role="page" data-add-back-btn="true">-->
-<div id="page2" data-role="page" data-add-back-btn="true" >
+<div id="page2" data-role="page"  >
 	
-	<div data-role="header" data-position="fixed" data-id="myheader" >
+	<div data-role="header" data-position="fixed" data-theme="a" data-add-back-btn="true">
 		<h1>Estimate</h1>
 	</div>
 	
@@ -273,7 +287,7 @@
 				<fieldset class="ui-grid-a" >
 					<div class="ui-block-a" >fill in text</div>
 					<div class="ui-block-b" >fill in text</div>
-					<span id="cnt" class="ui-li-count" >fill in number</span>
+					<span class="ui-li-count" >fill in number</span>
 				</fieldset>
 			</li>
 		</ul>
@@ -296,7 +310,7 @@
 	</div>
 
 	<div data-role="footer" data-theme="a" data-position="fixed" data-id="myfooter">
-		<h1>Uncopyright<br><a target="_blank" href="http://jaytarlecki.com/uncopyright/uncopyright/" style="color:#009245;">Jay Tarlecki</a><br></h1>
+				<h1>Uncopyright | <a target="_blank" href="http://jaytarlecki.com/uncopyright/uncopyright/" style="color:#009245;">Jay Tarlecki</a><br></h1>
 	</div>
 
 </div>
@@ -305,6 +319,92 @@
 <div data-role="popup" id="popupVal" data-theme="e" data-overlay-theme="a">
 	<p>Please enter a valid number before continuing.<p>
 </div>
+
+<div data-role="page" id="pageSettings">
+	
+	<div data-role="header" data-theme="a">
+	<h1>Settings</h1>
+	<a href="#page1" class="ui-btn ui-icon-arrow-r ui-btn-right ui-btn-icon-right ui-corner-all ui-shadow" data-transition="slide" >Renovation</a>
+	</div>
+	
+	
+	<div data-role="main" class="ui-content" >
+	
+	<p>This page is not yet active!</p>
+	
+	<ul data-role="listview" data-inset="true">    
+	  <li data-role="data-divider" data-theme="d"><h1>Click icon to view or edit settings</h1></li>
+	  
+
+	  
+	  <li><a href="#">Room</a><a href="#roomSettings" data-rel="popup" data-transition="slide" data-icon="gear">Settings</a></li>
+	  <li><a href="#">Crown Moulding</a><a href="#roomSettings" data-rel="popup" data-transition="slide" data-icon="gear">Settings</a></li>
+	  <li><a href="#">Sheetrock</a><a href="#roomSettings" data-rel="popup" data-transition="slide" data-icon="gear">Settings</a></li>
+	  <li><a href="#">Door Trim</a><a href="#roomSettings" data-rel="popup" data-transition="slide" data-icon="gear">Settings</a></li>
+	  <li><a href="#">Baseboard</a><a href="#roomSettings" data-rel="popup" data-transition="slide" data-icon="gear">Settings</a></li>
+	  <li><a href="#">Flooring</a><a href="#roomSettings" data-rel="popup" data-transition="slide" data-icon="gear">Settings</a></li>
+	  <li><a href="#">Paint</a><a href="#paintSettings" data-rel="popup" data-transition="slide" data-icon="gear">Settings</a></li>
+	</ul>
+	
+	<div data-role="popup" id="roomSettings" data-dialog="true">
+		<div data-role="main" class="ui-content">
+			<h3>Settings Dialog Sample this could be enormous</h3>
+			<p>The buttons have no actions yet.</p>
+			<a href="#" class="ui-btn ui-btn-inline ui-btn-b ui-shadow ui-corner-all ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini" data-rel="back">Save</a>
+			<a href="#" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-inline ui-mini" data-rel="back">Cancel</a>
+	  </div>
+	</div> 
+
+	<div data-role="popup" id="paintSettings" data-dialog="true">
+		<div data-role="main" class="ui-content">
+			<h3>Paint Settings</h3>
+			
+				<!-- insert form here -->
+				<form>
+				  
+				  <div id="paintSet" class="ui-field-contain">
+					<label for="paintPrimerCoats">Primer Coats</label>
+					<input type="text" name="paintPrimerCoats" id="fname" value="1">
+					<label for="paintPaintCoats">Paint Coats</label>
+					<input type="text" name="paintPaintCoats" id="lname" value="2">
+					<label for="paintCoverage">Paint Coverage (sq. ft.)</label>
+					<input type="text" name="paintCoverage" id="lname" value="400">
+				  </div>
+				
+
+				<!--
+				<script>
+				
+				$('[name="editButton"]').click(function(){
+					$(this).hide();
+					$('#buttons').show();
+					$('#lname').prop('disabled', false);
+					//$('#lname').removeAttr('disabled');
+					//$('input[name*="paint"]').prop('disabled', false);
+				});
+				</script>
+				--->
+				
+				<div id="buttons" >
+				<a href="#" class="ui-btn ui-btn-inline ui-btn-b ui-shadow ui-corner-all ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini" data-rel="back">Save</a>
+				<a href="#" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-left ui-btn-inline ui-mini" data-rel="back">Cancel</a>
+				<a href="#" class="ui-btn ui-btn-inline ui-btn-c ui-shadow ui-corner-all ui-icon-back ui-btn-icon-left ui-btn-inline ui-mini" data-rel="back">Restore defaults</a>				  
+				<div>
+				
+				</form>
+			
+			
+	  </div>
+	</div> 
+	
+	</div>
+
+	<div data-role="footer" data-theme="a" data-position="fixed" data-id="myfooter">
+				<h1>Uncopyright | <a target="_blank" href="http://jaytarlecki.com/uncopyright/uncopyright/" style="color:#009245;">Jay Tarlecki</a><br></h1>
+	</div>	
+
+</div>
+
 
 
 
@@ -324,6 +424,7 @@
 	
 	<script type="text/javascript" src="setup.js"></script>
 	<script type="text/javascript" src="reno_engine.js"></script>
+	<!--
 	<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -333,6 +434,7 @@
 		  ga('create', 'UA-52439924-1', 'auto');
 		  ga('send', 'pageview');
 	</script>
+	-->
 
 	</body>
 </html>
